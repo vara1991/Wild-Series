@@ -1,5 +1,4 @@
 {% extends 'base.html.twig' %}
-{% block title %}{{ slug }}{% endblock %}
 
 {% block body %}
 
@@ -12,9 +11,13 @@
         </div>
     </div>
 
+    <ul>
+        {% for season in seasons %}
+            <li> <a href="{{ path('show_season', { 'id': season.id }) }}"> Saison : {{ season.number }} </a> ({{ season.year }})</li>
+        {% endfor %}
+    </ul>
 
-
-    <a href="{{ path('wild_index') }}">
+    <a href="{{ path('app_index') }}">
         Retour à l'accueil
     </a>
 
