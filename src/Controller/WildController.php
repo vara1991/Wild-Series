@@ -19,9 +19,7 @@ class WildController extends AbstractController
 
     public function index() :Response
     {
-        $programs= $this->getDoctrine()
-            ->getRepository(Program::class)
-            ->findAll();
+        $programs= $this->getDoctrine()->getRepository(Program::class)->findAll();
 
         if (!$programs) {
             throw $this->createNotFoundException(
@@ -53,9 +51,7 @@ class WildController extends AbstractController
             ' ', ucwords(trim(strip_tags($slug)), "-")
         );
 
-        $program = $this->getDoctrine()
-            ->getRepository(Program::class)
-            ->findOneBy(['title' => mb_strtolower($slug)]);
+        $program = $this->getDoctrine()->getRepository(Program::class)->findOneBy(['title' => mb_strtolower($slug)]);
 
         if (!$program) {
             throw $this->createNotFoundException(
@@ -76,13 +72,8 @@ class WildController extends AbstractController
 
     public function showByCategory(string $categoryName):Response
     {
-        $category = $this->getDoctrine()
-            ->getRepository(Category::class)
-            ->findOneBy(['name' => $categoryName]);
-
-        $programs = $this->getDoctrine()
-            ->getRepository(Program::class)
-            ->findBy(['category' => $category->getId()], ['id' => 'desc'],3,0);
+        $category = $this->getDoctrine()->getRepository(Category::class)->findOneBy(['name' => $categoryName]);
+        $programs = $this->getDoctrine()->getRepository(Program::class)->findBy(['category' => $category->getId()], ['id' => 'desc'],3,0);
 
         return $this->render(
             'wild/category.html.twig',[
@@ -95,7 +86,7 @@ class WildController extends AbstractController
 
     /**
      * @param $slug
-     * @Route("wild/program/{slug<^[a-z0-9-]+$>}", defaults={"slug" = null}, name="show_program")
+     * @Route("wild/program/{slug}", defaults={"slug" = null}, name="show_program")
      * http://localhost:8000/wild/program/the-promised-neverland
      * http://localhost:8000/wild/program/the-twilight-zone
      */
@@ -107,10 +98,7 @@ class WildController extends AbstractController
             ' ', ucwords(trim(strip_tags($slug)), "-")
         );
 
-        $program = $this->getDoctrine()
-            ->getRepository(Program::class)
-            ->findOneBy(['title' => mb_strtolower($slug)]);
-
+        $program = $this->getDoctrine()->getRepository(Program::class)->findOneBy(['title' => mb_strtolower($slug)]);
         $season = $program->getSeasons();
 
         return $this->render('wild/program.html.twig', [
@@ -127,18 +115,31 @@ class WildController extends AbstractController
 
     public function showBySeason(int $id):Response
     {
-        $season = $this->getDoctrine()
-            ->getRepository(Season::class)
-            ->find($id);
-
+        $season = $this->getDoctrine()->getRepository(Season::class)->find($id);
         $program = $season->getProgram();
-
         $episode = $season->getEpisodes();
 
         return $this->render('wild/season.html.twig', [
             'season' => $season,
             'program' => $program,
             'episodes' => $episode,
+        ]);
+    }
+
+    /**
+     * @param $id
+     * @Route("wild/episode/{id}", name="show_episode").
+     */
+
+    public function showEpisode(Episode $episode):Response
+    {
+        $season = $episode->getSeason();
+        $program = $season->getProgram();
+
+        return $this->render('wild/episode.html.twig',[
+            'episode'=>$episode,
+            'season'=>$season,
+            'program'=>$program,
         ]);
     }
 }
