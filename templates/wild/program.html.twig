@@ -8,17 +8,13 @@
             <h1 class="mt-0">{{ program.title }}</h1>
             <p>{{ program.summary }}</p>
             <p>Categorie : {{ program.category.name }}</p>
-        </div>
+            <ul>
+                {% for season in seasons %}
+                    <li> <a href="{{ path('show_season', { 'id': season.id }) }}"> Saison : {{ season.number }} </a> ({{ season.year }})</li>
+                {% endfor %}
+            </ul>
+            <a href=" {{ path('wild_index') }}">Retour à l'index</a></br>
+            <a href="{{ path('app_index') }}">Retour à l'accueil</a>
     </div>
-
-    <ul>
-        {% for season in seasons %}
-            <li> <a href="{{ path('show_season', { 'id': season.id }) }}"> Saison : {{ season.number }} </a> ({{ season.year }})</li>
-        {% endfor %}
-    </ul>
-
-    <a href="{{ path('app_index') }}">
-        Retour à l'accueil
-    </a>
 
 {% endblock %}
