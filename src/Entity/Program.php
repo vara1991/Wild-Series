@@ -35,7 +35,6 @@ class Program
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="programs")
-     * @ORM\JoinColumn(nullable=false)
      */
     private $category;
 
@@ -166,5 +165,4 @@ class Program
 
         return $this;
     }
-
 }

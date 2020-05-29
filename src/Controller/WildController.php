@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Category;
-use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
+use App\Entity\Episode;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,13 +13,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class WildController extends AbstractController
 {
 
-     /**
+    /**
      * @Route("/wild", name="wild_index")
-    */
-
+     */
     public function index() :Response
     {
-        $programs= $this->getDoctrine()->getRepository(Program::class)->findAll();
+        $programs = $this->getDoctrine()->getRepository(Program::class)->findAll();
 
         if (!$programs) {
             throw $this->createNotFoundException(
@@ -34,12 +33,9 @@ class WildController extends AbstractController
     }
 
     /**
-     * Getting a program with a formatted slug for title
-     * @param string $slug The slugger
      * @Route("wild/show/{slug<^[a-z0-9-]+$>}", defaults={"slug" = null}, name="wild_show")
      */
-
-    public function show(?string $slug):Response
+    public function show(int $slug): Response
     {
         if (!$slug) {
             throw $this

@@ -34,14 +34,14 @@ class Season
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Program", inversedBy="seasons")
-     */
-    private $program;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Episode", mappedBy="season")
      */
     private $episodes;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Program", inversedBy="seasons")
+     */
+    private $program;
 
     public function __construct()
     {
@@ -85,17 +85,6 @@ class Season
     public function setDescription(?string $description): self
     {
         $this->description = $description;
-        return $this;
-    }
-
-    public function getProgram(): ?Program
-    {
-        return $this->program;
-    }
-
-    public function setProgram(?Program $program): self
-    {
-        $this->program = $program;
 
         return $this;
     }
@@ -127,6 +116,18 @@ class Season
                 $episode->setSeason(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getProgram(): ?Program
+    {
+        return $this->program;
+    }
+
+    public function setProgram(?Program $program): self
+    {
+        $this->program = $program;
 
         return $this;
     }
