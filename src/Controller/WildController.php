@@ -67,17 +67,17 @@ class WildController extends AbstractController
 
     /**
      * @param string $categoryName
-     * @Route("wild/form/{categoryName}", name="show_category").
+     * @Route("wild/category/{categoryName}", name="show_category").
      */
 
     public function showByCategory(string $categoryName):Response
     {
         $category = $this->getDoctrine()->getRepository(Category::class)->findOneBy(['name' => $categoryName]);
-        $programs = $this->getDoctrine()->getRepository(Program::class)->findBy(['form' => $category->getId()], ['id' => 'desc'],3,0);
+        $programs = $this->getDoctrine()->getRepository(Program::class)->findBy(['category' => $category->getId()], ['id' => 'desc'],3,0);
 
         return $this->render(
-            'wild/form.html.twig',[
-            'form' => $category,
+            'wild/category.html.twig',[
+            'category' => $category,
             'categoryName'  => $categoryName,
             'programs' => $programs,
         ]);
