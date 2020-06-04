@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mail{% endblock %}
+{% block header %}
+
+{% endblock %}
+{% block body %}
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #222222">
+        <thead>
+            <tr>
+                <td align="center">
+                    <h1 style="color: blue " style="font-weight: bold" style="font-size: 50rem">
+                        Wild séries
+                    </h1>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td height="50rem" style="color: blue" align="center" style="font-size: 20rem">
+                    Un nouveau program à était ajouté : <a href="localhost:8000{{ path('wild_show', {'slug': program.slug}) }}">{{program.title}}</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

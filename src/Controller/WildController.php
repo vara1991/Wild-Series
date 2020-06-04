@@ -36,7 +36,7 @@ class WildController extends AbstractController
     /**
      * @Route("wild/show/{slug<^[a-z0-9-]+$>}", defaults={"slug" = null}, name="wild_show")
      */
-    public function show(int $slug): Response
+    public function show($slug): Response
     {
         if (!$slug) {
             throw $this
