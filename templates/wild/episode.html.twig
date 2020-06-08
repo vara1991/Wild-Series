@@ -7,6 +7,18 @@
         <h1>{{ program.title }} - Saison : {{ season.number }}</h1>
         <h2>Episode : {{ episode.title }}</h2>
         <p>{{ episode.synopsis }}</p>
+        {% if app.user %}
+            <ul>
+                {% for comment in comments %}
+                    <li>{{ comment.comment }}</li>
+                {% endfor %}
+            </ul>
+
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="btn">{{ button_label|default('Save') }}</button>
+            {{ form_end(form) }}
+        {% endif %}
     </div>
 
     <a href="{{ path('show_season', {id:season.id}) }}">Retour saison</a></br>

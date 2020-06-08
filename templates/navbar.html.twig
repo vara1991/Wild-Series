@@ -25,7 +25,7 @@
                     Acteurs
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="{{ path('show_actor',{'id' : 1}) }}">Andrew Lincoln </a>
+                    <a class="dropdown-item" href="{{ path('show_actor',{'id' : 770}) }}">Andrew Lincoln </a>
                     <a class="dropdown-item" href="{{ path('show_actor',{'id' : 2}) }}">Norman Reedus </a>
                     <a class="dropdown-item" href="{{ path('show_actor',{'id' : 3}) }}">Lauren Cohan </a>
                     <a class="dropdown-item" href="{{ path('show_actor',{'id' : 4}) }}">Danai Gurira  </a>
@@ -37,7 +37,11 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" id="nav_link" href="#">Déconnection John Doe</a>
+                {% if app.user %}
+                    <a class="nav-link" id="nav_link" href="{{ path('app_logout') }}"> Se déconnecter</a>
+                {% else %}
+                    <a class="nav-link" id="nav_link" href="{{ path('app_login') }}"> Se connecter</a>
+                {% endif %}
             </li>
         </ul>
     </div>
