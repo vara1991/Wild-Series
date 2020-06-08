@@ -158,6 +158,20 @@ class WildController extends AbstractController
     }
 
     /**
+     * @Route("wild/delete/{id}", name="wild_comment_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, Comment $comment): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($comment);
+            $entityManager->flush();
+        }
+
+        return $this->redirect($_SERVER['HTTP_REFERER']);
+    }
+
+    /**
      * @param $id
      * @Route("wild/actor/{id}", name="show_actor").
      */

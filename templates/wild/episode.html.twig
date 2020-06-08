@@ -7,13 +7,20 @@
         <h1>{{ program.title }} - Saison : {{ season.number }}</h1>
         <h2>Episode : {{ episode.title }}</h2>
         <p>{{ episode.synopsis }}</p>
-        {% if app.user %}
+
+        {% if is_granted('ROLE_USER') %}
             <ul>
                 {% for comment in comments %}
                     <li>{{ comment.comment }}</li>
+                    {% if(comment.author.id == app.user.id)%}
+                        <form method="post" action="{{ path('wild_comment_delete', {'id': comment.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+                            <button class="btn">Delete</button>
+                        </form>
+                    {% endif %}
                 {% endfor %}
             </ul>
-
             {{ form_start(form) }}
             {{ form_widget(form) }}
             <button class="btn">{{ button_label|default('Save') }}</button>
