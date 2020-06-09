@@ -1,7 +1,9 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <a href="{{ path('wild_index') }}">
-        Testing index() method from WildController to view all programs.
-    </a>
+    <ul>
+        {% for program in programs %}
+            <li><a href="{{ path('wild_show', {'slug': program.slug}) }}">{{ program.title }}</a></li>
+        {% endfor %}
+    </ul>
 {% endblock %}
