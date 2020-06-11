@@ -55,6 +55,9 @@ class ProgramController extends AbstractController
             $mailer->send($email);
 
             $contents = $this->renderView('program/email/notification.html.twig', ['program' => $program]);
+
+            $this->addFlash('success', 'Un nouveau programme à été ajouté');
+
             return new Response($contents);
         }
 
@@ -86,6 +89,8 @@ class ProgramController extends AbstractController
             $program->setSlug($slugify->generate($program->getTitle()));
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash('success', 'Un programme à été modifié');
+
             return $this->redirectToRoute('program_index');
         }
 
@@ -105,6 +110,8 @@ class ProgramController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($program);
             $entityManager->flush();
+
+            $this->addFlash('danger', 'Un programme à été supprimé');
         }
 
         return $this->redirectToRoute('program_index');
