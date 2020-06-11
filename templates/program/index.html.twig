@@ -14,6 +14,7 @@
                 <th>Poster</th>
                 <th>Country</th>
                 <th>Year</th>
+                <th>Actors</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -26,6 +27,15 @@
                 <td>{{ program.poster }}</td>
                 <td>{{ program.country }}</td>
                 <td>{{ program.year }}</td>
+                {% if program.actors %}
+                <td>
+                    {% for actor in program.actors %}
+                        {{ actor.name }},
+                    {% endfor %}
+                </td>
+                {% else %}
+                    <p>aucun acteur</p>
+                {% endif %}
                 <td>
                     <a href="{{ path('program_show', {'slug': program.slug}) }}">show</a>
                     {% if is_granted('ROLE_ADMIN') %}
@@ -40,6 +50,8 @@
         {% endfor %}
         </tbody>
     </table>
+
+
 
     <a href="{{ path('program_new') }}">Create new</a>
 {% endblock %}
